@@ -11,7 +11,7 @@ const step = msg => console.log(chalk.cyan(msg))
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: "inherit", ...opts })
 
 async function main() {
-  await unitTesting().catch(error => {
+  await buildProject().catch(error => {
     throw error
   })
   const releaseType = await selectReleaseType()
@@ -20,14 +20,14 @@ async function main() {
   await publishPackagesToNpm(targetVersion).catch(error => {
     throw error
   })
-  //   await pushToGithub()
+  await pushToGithub()
   await pushToGitee()
 }
 
-async function unitTesting() {
-  step("\nRunning tests...")
+async function buildProject() {
+  step("\n Building...")
   try {
-    await run("pnpm", ["run", "test"])
+    await run("npm", ["run", "build"])
   } catch (error) {
     throw error
   }
@@ -74,9 +74,9 @@ async function updateVersion(releaseType) {
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"))
   pkg.version = targetVersion
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n")
-  // update pnpm-lock.yaml
+  // update package-lock.json
   step("\nUpdating lockfile...")
-  await run(`pnpm`, ["install", "--prefer-offline"])
+  await run(`npm`, ["install", "--prefer-offline"])
   return targetVersion
 }
 
@@ -93,13 +93,15 @@ async function commitChanges(targetVersion) {
 
 async function pushToGithub(version) {
   step("\nPushing commit to Github...")
-  await run("git", ["tag", `v${version}`])
-  await run("git", ["push", "github", `master`])
+  // await run("git", ["tag", `v${version}`])
+  await run("git", ["push", "github", `main`])
+  console.log(chalk.green(`Successfully For Push Github ${pkgName}@${version}`))
 }
 async function pushToGitee(version) {
   step("\nPushing commit to Gitee...")
   //   await run("git", ["tag", `v${version}`])
   await run("git", ["push", "gitee", `master`])
+  console.log(chalk.green(`Successfully For Push Gitee ${pkgName}@${version}`))
 }
 async function publishPackagesToNpm(version) {
   step("\nPublishing packages to Npm...")
