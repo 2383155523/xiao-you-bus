@@ -1,0 +1,36 @@
+{
+  "name": "xiao-you-bus",
+  "version": "1.0.3",
+  "description": "轻便小巧的发布订阅库，适用于框架中的任意组件通讯",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc webpack.config.ts && webpack"
+  },
+  "keywords": [
+    "xiao",
+    "xiao-you",
+    "bus",
+    "event",
+    "event-bus",
+    "微若蜉蝣"
+  ],
+  "author": "微若蜉蝣",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/webpack": "^5.28.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "json-loader": "^0.5.7",
+    "xiao-you-bus": "^1.0.3"
+  }
+}
