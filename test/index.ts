@@ -1,4 +1,5 @@
-import { createEventBus } from "../src/index"
+// import { createEventBus } from "../src/index"
+import { createEventBus } from "xiao-you-bus"
 
 interface State {
   name: string
@@ -12,6 +13,6 @@ const bus = createEventBus<State>({
   num: 1,
 })
 
-bus.on("num", () => {})
+bus.on("num", (newVal, oldVal) => {})
 
-bus.commit("theme", "dark")
+bus.commit("num", 1)
