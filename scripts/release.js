@@ -94,7 +94,7 @@ async function commitChanges(targetVersion) {
 async function pushToGithub(version) {
   step("\nPushing commit to Github...")
   // await run("git", ["tag", `v${version}`])
-  await run("git", ["push", "github", `main`])
+  await run("git", ["push", "github", `master`])
   console.log(chalk.green(`Successfully For Push Github ${pkgName}@${version}`))
 }
 async function pushToGitee(version) {
